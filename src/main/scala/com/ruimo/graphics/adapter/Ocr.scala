@@ -44,19 +44,21 @@ object Ocr {
   def isDigit(c: Char): Boolean =
     '0' <= c && c <= '9' || c == '-'
 
-  def perform(img: BufferedImage, charset: Charset = StandardCharsets.UTF_8, option: String): OcrResult =
+  def perform(img: BufferedImage, charset: Charset = StandardCharsets.UTF_8, option: String, langCode: Option[String] = None): OcrResult =
     withTempFile(prefix = None, suffix = Some(".png")) { imgFile =>
       withTempFile(prefix = None, suffix = Some(".txt")) { txtFile =>
         ImageIO.write(img, "png", imgFile.toFile)
-        perform(imgFile, txtFile, option)
+        perform(imgFile, txtFile, option, langCode)
         val result = new String(Files.readAllBytes(txtFile), charset)
         logger.info("Ocr result: '" + result + "'")
         OcrResult(result, Base64.encode(imgFile))
       }.get
     }.get
 
-  def perform(imageFile: Path, ocrFile: Path, option: String): Int = {
-    val cmd = "tesseract " + imageFile.toAbsolutePath + " stdout -psm 7 " + option
+  def perform(imageFile: Path, ocrFile: Path, option: String): Int = perform(imageFile, ocrFile, option, None)
+
+  def perform(imageFile: Path, ocrFile: Path, option: String, langCode: Option[String]): Int = {
+    val cmd = "tesseract " + imageFile.toAbsolutePath + " stdout -psm 7 " + langCode.map(lc => "-l " + lc + " ").getOrElse("") + option
     logger.info("Invoking [" + cmd + "]")
     (Process(cmd) #> ocrFile.toFile run) exitValue()
   }
