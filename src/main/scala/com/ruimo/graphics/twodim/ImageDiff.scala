@@ -2,7 +2,6 @@ package com.ruimo.graphics.twodim
 
 import java.nio.file.Path
 
-import com.ruimo.graphics.twodim.Rgb
 import javax.imageio.ImageIO
 import scala.math.{sqrt, pow}
 
