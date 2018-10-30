@@ -22,7 +22,7 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 
 // Logging
 libraryDependencies ++= Seq(
-  "com.ruimo" %% "scoins" % "1.21",
+  "com.ruimo" %% "scoins" % "1.22",
   "ch.qos.logback" % "logback-core" % "1.1.3",
   "ch.qos.logback" % "logback-classic" % "1.1.3",
   "org.slf4j" % "slf4j-api" % "1.7.12",
