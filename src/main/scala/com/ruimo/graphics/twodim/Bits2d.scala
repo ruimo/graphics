@@ -10,7 +10,8 @@ import scala.collection.immutable
 
 class Bits2d(
   val width: Int, val height: Int,
-  val visibleRect: Rectangle, bits: immutable.BitSet
+  val visibleRect: Rectangle,
+  bits: immutable.BitSet
 ) {
   val offsetX: Int = visibleRect.x
   val offsetY: Int = visibleRect.y
@@ -51,8 +52,7 @@ class Bits2d(
       @tailrec def finder(x: Int, y: Int, sumError: Int): Option[Offset] =
         if (sumError > maxError) {
           None
-        }
-        else {
+        } else {
           val error: Int = if (this(x + xoffset, y + yoffset) != tofind(x, y)) 1 else 0
           val newx = x + 1
           if (newx >= tofind.width) {
@@ -107,6 +107,23 @@ object Bits2d {
     }
 
     new Bits2d(img.getWidth, img.getHeight, rect, builder.result())
+  }
+
+  def subImage(src: Bits2d, offsetX: Int, offsetY: Int, width: Int, height: Int): Bits2d = {
+    val builder = immutable.BitSet.newBuilder
+    builder.sizeHint(width * height)
+    builder.clear()
+    var idx = 0
+
+    for {
+      y <- offsetY until offsetY + height
+      x <- offsetX until offsetX + width
+    } {
+      if (src(x, y)) builder += idx
+      idx += 1
+    }
+
+    new Bits2d(width, height, Rectangle(0, 0, width, height), builder.result())
   }
 }
 

@@ -68,5 +68,88 @@ class Bits2dSpec extends Specification {
       bitsWithOffset2(1, 1) === true
       bitsWithOffset2(2, 1) === false
     }
+
+    "Can find image" in {
+      // img0
+      // □□□□□
+      // □□■■□
+      // □□■□□
+      // □□□□□
+      val img0 = new BufferedImage(5, 4, BufferedImage.TYPE_INT_ARGB)
+      img0.setRGB(0, 0, 0)
+      img0.setRGB(1, 0, 0)
+      img0.setRGB(2, 0, 0)
+      img0.setRGB(3, 0, 0)
+      img0.setRGB(4, 0, 0)
+      img0.setRGB(0, 1, 0)
+      img0.setRGB(1, 1, 0)
+      img0.setRGB(2, 1, -1)
+      img0.setRGB(3, 1, -1)
+      img0.setRGB(4, 1, 0)
+      img0.setRGB(0, 2, 0)
+      img0.setRGB(1, 2, 0)
+      img0.setRGB(2, 2, -1)
+      img0.setRGB(3, 2, 0)
+      img0.setRGB(4, 2, 0)
+      img0.setRGB(0, 3, 0)
+      img0.setRGB(1, 3, 0)
+      img0.setRGB(2, 3, 0)
+      img0.setRGB(3, 3, 0)
+      img0.setRGB(4, 3, 0)
+      val bits0 = Bits2d(img0)
+
+      // img1
+      // ■■
+      // ■□
+      val img1 = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB)
+      img1.setRGB(0, 0, -1)
+      img1.setRGB(1, 0, -1)
+      img1.setRGB(0, 1, -1)
+      img1.setRGB(1, 1, 0)
+      val bits1 = Bits2d(img1)
+
+      bits0.find(
+        bits1, maxError = 0,
+        xstart = 0, ystart = 0, xend = 3, yend = 2
+      ) === Some(Offset(2, 1))
+    }
+
+    "Can create sub image" in {
+      // img0
+      // □□□□□
+      // □□■■□
+      // □□■□□
+      // □□□□□
+      val img0 = new BufferedImage(5, 4, BufferedImage.TYPE_INT_ARGB)
+      img0.setRGB(0, 0, 0)
+      img0.setRGB(1, 0, 0)
+      img0.setRGB(2, 0, 0)
+      img0.setRGB(3, 0, 0)
+      img0.setRGB(4, 0, 0)
+      img0.setRGB(0, 1, 0)
+      img0.setRGB(1, 1, 0)
+      img0.setRGB(2, 1, -1)
+      img0.setRGB(3, 1, -1)
+      img0.setRGB(4, 1, 0)
+      img0.setRGB(0, 2, 0)
+      img0.setRGB(1, 2, 0)
+      img0.setRGB(2, 2, -1)
+      img0.setRGB(3, 2, 0)
+      img0.setRGB(4, 2, 0)
+      img0.setRGB(0, 3, 0)
+      img0.setRGB(1, 3, 0)
+      img0.setRGB(2, 3, 0)
+      img0.setRGB(3, 3, 0)
+      img0.setRGB(4, 3, 0)
+      val bits0 = Bits2d(img0)
+
+      val sub = Bits2d.subImage(bits0, 2, 1, 2, 2)
+      sub.width === 2
+      sub.height === 2
+      sub(0, 0) === true
+      sub(1, 0) === true
+      sub(0, 1) === true
+      sub(1, 1) === false
+    }
   }
 }
