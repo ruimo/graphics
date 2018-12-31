@@ -32,9 +32,9 @@ class Bits2d(
       val vx = x + visibleRect.x
       val vy = y + visibleRect.y
       if (apply(vx, vy)) {
-        g.setColor(Color.BLACK)
-      } else {
         g.setColor(Color.WHITE)
+      } else {
+        g.setColor(Color.BLACK)
       }
       g.drawLine(x, y, x, y)
     }
