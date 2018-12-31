@@ -11,7 +11,7 @@ import scala.collection.immutable
 class Bits2d(
   val width: Int, val height: Int,
   val visibleRect: Rectangle,
-  bits: immutable.BitSet
+  private val bits: immutable.BitSet
 ) {
   val offsetX: Int = visibleRect.x
   val offsetY: Int = visibleRect.y
@@ -21,6 +21,10 @@ class Bits2d(
       throw new IllegalArgumentException("(" + x + ", " + y + ") is out of bounds " + visibleRect)
     bits(x - offsetX + (y - offsetY) * visibleRect.width)
   }
+
+  def isSameImage(that: Bits2d): Boolean =
+    if (visibleRect != that.visibleRect) false
+    else bits == that.bits
 
   def save(path: Path, imageType: String = "png") {
     val buf = new BufferedImage(visibleRect.width, visibleRect.height, BufferedImage.TYPE_INT_BGR)
