@@ -27,6 +27,10 @@ class Bits2d(
     else bits == that.bits
 
   def save(path: Path, imageType: String = "png") {
+    ImageIO.write(toBufferedImage, imageType, path.toFile)
+  }
+
+  def toBufferedImage: BufferedImage = {
     val buf = new BufferedImage(visibleRect.width, visibleRect.height, BufferedImage.TYPE_INT_BGR)
     val g = buf.createGraphics()
     for {
@@ -42,7 +46,7 @@ class Bits2d(
       }
       g.drawLine(x, y, x, y)
     }
-    ImageIO.write(buf, imageType, path.toFile)
+    buf
   }
 
   def find(
