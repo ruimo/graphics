@@ -44,11 +44,14 @@ object Ocr {
   def isDigit(c: Char): Boolean =
     '0' <= c && c <= '9' || c == '-'
 
-  def perform(img: BufferedImage, charset: Charset = StandardCharsets.UTF_8, option: String, langCode: Option[String] = None): OcrResult =
+  def perform(
+    img: BufferedImage, charset: Charset = StandardCharsets.UTF_8, option: String,
+    langCode: Option[String] = None, psm: Option[String] = None
+  ): OcrResult =
     withTempFile(prefix = None, suffix = Some(".png")) { imgFile =>
       withTempFile(prefix = None, suffix = Some(".txt")) { txtFile =>
         ImageIO.write(img, "png", imgFile.toFile)
-        perform(imgFile, txtFile, option, langCode)
+        perform(imgFile, txtFile, option, langCode, psm)
         val result = new String(Files.readAllBytes(txtFile), charset)
         logger.info("Ocr result: '" + result + "'")
         OcrResult(result, Base64.encode(imgFile))
