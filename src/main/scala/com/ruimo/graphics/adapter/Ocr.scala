@@ -57,8 +57,17 @@ object Ocr {
 
   def perform(imageFile: Path, ocrFile: Path, option: String): Int = perform(imageFile, ocrFile, option, None)
 
-  def perform(imageFile: Path, ocrFile: Path, option: String, langCode: Option[String]): Int = {
-    val cmd = "tesseract " + imageFile.toAbsolutePath + " stdout -psm 7 " + langCode.map(lc => "-l " + lc + " ").getOrElse("") + option
+  def perform(
+    imageFile: Path, ocrFile: Path, option: String, langCode: Option[String]
+  ): Int = perform(imageFile, ocrFile, option, langCode, None)
+
+  def perform(
+    imageFile: Path, ocrFile: Path, option: String, langCode: Option[String], psm: Option[String]
+  ): Int = {
+    val cmd = "tesseract " + imageFile.toAbsolutePath +
+      " stdout " +
+      psm.map(p => s"-psm $p").getOrElse("-psm 7") + " " +
+      langCode.map(lc => "-l " + lc + " ").getOrElse("") + option
     logger.info("Invoking [" + cmd + "]")
     (Process(cmd) #> ocrFile.toFile run) exitValue()
   }
