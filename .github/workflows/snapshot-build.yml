@@ -5,14 +5,14 @@ on:
     branches: [main]
     tags: ["*"]
 jobs:
-  publish:
+  build-snapshot:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
       - uses: olafurpg/setup-scala@v13
-      - run: sbt ci-release
+      - run: sbt -v ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
