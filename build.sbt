@@ -29,7 +29,8 @@ lazy val root = project
         "scm:git@github.com:ruimo/graphics.git"
       )
     ),
-    scalacOptions in Test ++= Seq("-Yrangepos"),
+    versionScheme := Some("early-semver"),
+    Test / scalacOptions ++= Seq("-Yrangepos"),
     libraryDependencies ++= Seq(
       "com.ruimo" %% "scoins" % "1.29",
       "ch.qos.logback" % "logback-core" % "1.2.9",
