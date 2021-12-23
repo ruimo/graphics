@@ -19,7 +19,7 @@ object ColorPassFilter {
       lowLimitHue <= hsv.h && hsv.h <= highLimitHue
   }
 
-  case class SettingsImpl private(
+  private case class SettingsImpl(
     hue: Hsv.Hue, hueErrorAllowance: Percent
   ) extends Settings
 
@@ -27,7 +27,7 @@ object ColorPassFilter {
     hue: Hsv.Hue, hueErrorAllowance: Percent
   ): Settings = SettingsImpl(hue, hueErrorAllowance)
 
-  def perform(img: BufferedImage, settings: Settings, filteredColor: Rgb) {
+  def perform(img: BufferedImage, settings: Settings, filteredColor: Rgb): Unit = {
     val width = img.getWidth()
     val height = img.getHeight()
     

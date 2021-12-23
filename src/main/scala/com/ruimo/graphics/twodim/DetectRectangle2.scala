@@ -163,7 +163,7 @@ object DetectRectangle2 {
         )
       }
 
-    def findRectangle(vlines: imm.Set[VLine], hlines: imm.Set[HLine])(onFound: Rectangle => Unit) {
+    def findRectangle(vlines: imm.Set[VLine], hlines: imm.Set[HLine])(onFound: Rectangle => Unit): Unit = {
       def distance(p0: Point, p1: Point): Double = sqrt(pow(p1.x - p0.x, 2) + pow(p1.y - p0.y, 2))
 
       def rectangle(vl0: VLine, hl0: HLine, vl1: VLine, hl1: HLine): Rectangle = {
@@ -175,7 +175,7 @@ object DetectRectangle2 {
         Rectangle(x0, y0, x1 - x0, y1 - y0)
       }
 
-      def init(vls: imm.Set[VLine], hls: imm.Set[HLine]) {
+      def init(vls: imm.Set[VLine], hls: imm.Set[HLine]): Unit = {
         vls.foreach { vl =>
           findTopLeft(vls, hls, vl)
         }
@@ -183,7 +183,7 @@ object DetectRectangle2 {
 
       def findTopLeft(
         vls: imm.Set[VLine], hls: imm.Set[HLine], line0: VLine
-      ) {
+      ): Unit = {
         hls.foreach { hl =>
           if (
             hl.p0.x - errorAllowance <= line0.x && line0.x <= hl.p1.x + errorAllowance
@@ -196,7 +196,7 @@ object DetectRectangle2 {
 
       def findTopRight(
         vls: imm.Set[VLine], hls: imm.Set[HLine], line0: VLine, line1: HLine
-      ) {
+      ): Unit = {
         vls.foreach { vl =>
           if (
             line1.p0.x - errorAllowance <= vl.x && vl.x <= line1.p1.x + errorAllowance
@@ -209,7 +209,7 @@ object DetectRectangle2 {
 
       def findBottomRight(
         vls: imm.Set[VLine], hls: imm.Set[HLine], line0: VLine, line1: HLine, line2: VLine
-      ) {
+      ): Unit = {
         hls.foreach { hl =>
           if (
             line2.p0.y - errorAllowance <= hl.y && hl.y <= line2.p1.y + errorAllowance &&

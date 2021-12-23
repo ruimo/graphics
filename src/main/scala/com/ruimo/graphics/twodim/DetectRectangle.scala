@@ -107,7 +107,7 @@ object DetectRectangle {
 
       var found: List[Rectangle] = List()
 
-      def init(vls: imm.Seq[VerticalLineWithDots], hls: imm.Seq[HorizontalLineWithDots]) {
+      def init(vls: imm.Seq[VerticalLineWithDots], hls: imm.Seq[HorizontalLineWithDots]): Unit = {
         vls.foreach { vl =>
           findTopLeft(vls, hls, vl)
         }
@@ -115,7 +115,7 @@ object DetectRectangle {
 
       def findTopLeft(
         vls: imm.Seq[VerticalLineWithDots], hls: imm.Seq[HorizontalLineWithDots], line0: VerticalLineWithDots
-      ) {
+      ): Unit = {
         hls.foreach { hl =>
           if (distance(hl.left, line0.top) <= errorAllowance) {
             findTopRight(vls, hls, line0, hl)
@@ -126,7 +126,7 @@ object DetectRectangle {
       def findTopRight(
         vls: imm.Seq[VerticalLineWithDots], hls: imm.Seq[HorizontalLineWithDots],
         line0: VerticalLineWithDots, line1: HorizontalLineWithDots
-      ) {
+      ): Unit = {
         vls.foreach { vl =>
           if (
             vl.x != line0.x &&
@@ -140,7 +140,7 @@ object DetectRectangle {
       def findBottomRight(
         vls: imm.Seq[VerticalLineWithDots], hls: imm.Seq[HorizontalLineWithDots],
         line0: VerticalLineWithDots, line1: HorizontalLineWithDots, line2: VerticalLineWithDots
-      ) {
+      ): Unit = {
         hls.foreach { hl =>
           if (
             hl.y != line1.y

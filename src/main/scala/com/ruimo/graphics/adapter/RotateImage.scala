@@ -13,12 +13,10 @@ object RotateImage {
 
   def perform(img: Path, radianToRotate: Double): Int = {
     val rotatedFile = Files.createTempFile(null, ".png")
-    val rc = (
-      Process(
-        "convert -rotate " + Degree.fromRadian(radianToRotate) +
+    val rc = Process(
+      "convert -rotate " + Degree.fromRadian(radianToRotate) +
         " " + img.toAbsolutePath + " " + rotatedFile.toAbsolutePath
-      ) run
-    ) exitValue()
+    ).run().exitValue()
 
     if (rc == 0) {
       logger.info("Rotate " + img.toAbsolutePath + " success.")

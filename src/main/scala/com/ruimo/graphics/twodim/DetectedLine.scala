@@ -4,7 +4,7 @@ import scala.collection.{immutable => imm, mutable => mut}
 import scala.annotation.tailrec
 
 sealed trait DetectedLineWithDots {
-  val sortedDots: List[(Int, Int)]
+  def sortedDots: List[(Int, Int)]
   val dots: imm.Set[(Int, Int)]
   val errorAllowance: Int
 }
@@ -15,7 +15,8 @@ case class HorizontalLineWithDots(dots: imm.Set[(Int, Int)], errorAllowance: Int
   lazy val length = right._1 - left._1
   lazy val y = (left._2 + right._2) / 2
 
-  lazy val sortedDots: List[(Int, Int)] = dots.toList.sortBy(_._1)
+  private lazy val _sortedDots: List[(Int, Int)] = dots.toList.sortBy(_._1)
+  def sortedDots: List[(Int, Int)] = _sortedDots
 
   def split: imm.Seq[HorizontalLineWithDots] = {
     @tailrec def splitter(
@@ -42,7 +43,8 @@ case class VerticalLineWithDots(dots: imm.Set[(Int, Int)], errorAllowance: Int) 
   lazy val length = bottom._2 - top._2
   lazy val x = (top._1 + bottom._1) / 2
 
-  lazy val sortedDots: List[(Int, Int)] = dots.toList.sortBy(_._2)
+  lazy val _sortedDots: List[(Int, Int)] = dots.toList.sortBy(_._2)
+  def sortedDots: List[(Int, Int)] = _sortedDots
 
   def split: imm.Seq[VerticalLineWithDots] = {
     @tailrec def splitter(

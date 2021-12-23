@@ -50,7 +50,7 @@ object TemplateMatching {
     find(canvas, template, maxError, xstart, ystart, xend, yend)
   }
 
-  private def save(bits: Bits2d, tstamp: Long, name: String) {
+  private def save(bits: Bits2d, tstamp: Long, name: String): Unit = {
     bits.save(Paths.get("/tmp/bits" + name + tstamp))
   }
 

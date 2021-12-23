@@ -157,9 +157,9 @@ object Hugh {
   ): imm.IndexedSeq[FoundLine] = {
     val width: Int = img.getWidth
     val height: Int = img.getHeight
-    def findDots(f: Point => Unit) {
+    def findDots(f: Point => Unit): Unit = {
       val line = new Array[Int](width)
-      @tailrec def scan(x: Int, y: Int) {
+      @tailrec def scan(x: Int, y: Int): Unit = {
         if (y >= height) return
         if (x == 0) img.getRGB(0, y, width, 1, line, 0, width)
         if (isDot(line(x))) f(Point(x, y))
@@ -194,9 +194,9 @@ object Hugh {
   ): imm.IndexedSeq[FoundLineWithDots] = {
     val width: Int = img.getWidth
     val height: Int = img.getHeight
-    def findDots(f: Point => Unit) {
+    def findDots(f: Point => Unit): Unit = {
       val line = new Array[Int](width)
-      @tailrec def scan(x: Int, y: Int) {
+      @tailrec def scan(x: Int, y: Int): Unit = {
         if (y >= height) return
         if (x == 0) img.getRGB(0, y, width, 1, line, 0, width)
         if (isDot(line(x))) f(Point(x, y))

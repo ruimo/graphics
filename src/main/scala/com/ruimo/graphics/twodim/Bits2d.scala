@@ -26,7 +26,7 @@ class Bits2d(
     if (visibleRect != that.visibleRect) false
     else bits == that.bits
 
-  def save(path: Path, imageType: String = "png") {
+  def save(path: Path, imageType: String = "png"): Unit = {
     ImageIO.write(toBufferedImage, imageType, path.toFile)
   }
 

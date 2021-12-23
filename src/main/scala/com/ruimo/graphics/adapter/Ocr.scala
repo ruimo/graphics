@@ -72,6 +72,6 @@ object Ocr {
       psm.map(p => s"-psm $p").getOrElse("-psm 7") + " " +
       langCode.map(lc => "-l " + lc + " ").getOrElse("") + option
     logger.info("Invoking [" + cmd + "]")
-    (Process(cmd) #> ocrFile.toFile run) exitValue()
+    Process(cmd).#>(ocrFile.toFile).run().exitValue()
   }
 }

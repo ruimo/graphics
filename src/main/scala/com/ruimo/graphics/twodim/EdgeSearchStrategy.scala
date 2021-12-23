@@ -41,6 +41,6 @@ case class ColorEdgeSearchStrategy(
         error(h0, h, 360) < hsvError && error(s0, s, 100) < hsvError && error(v0, v, 100) < hsvError
       ) cnt + 1 else cnt
     })
-    (Percent(100 * hitCount / line.size) > threshold, this)
+    (Percent(100.0 * hitCount / line.size) > threshold, this)
   }
 }

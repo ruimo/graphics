@@ -9,7 +9,7 @@ object Binarization {
     val brightnessThreshold: Int
   }
 
-  case class SettingsImpl private(
+  private case class SettingsImpl(
     brightnessThreshold: Int
   ) extends Settings
 
@@ -17,7 +17,7 @@ object Binarization {
     brightnessThreshold: Int
   ): Settings = SettingsImpl(brightnessThreshold)
 
-  def perform(img: BufferedImage, settings: Settings) {
+  def perform(img: BufferedImage, settings: Settings): Unit = {
     val width = img.getWidth()
     val height = img.getHeight()
 

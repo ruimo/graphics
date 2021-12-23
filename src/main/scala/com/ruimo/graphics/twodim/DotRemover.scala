@@ -77,7 +77,7 @@ object DotRemover {
   def removeDots(
     dotSize: Int, blackBrightness: Int, img: BufferedImage,
     scanArea: Option[Rectangle] = None
-  ) {
+  ): Unit = {
     val area = scanArea.getOrElse(Rectangle(0, 0, img.getWidth(), img.getHeight()))
     val width = area.width + 2
     val height = area.height + 2
@@ -112,7 +112,7 @@ object DotRemover {
         true
       }
 
-      def removeDots(x: Int, y: Int, size: Int) {
+      def removeDots(x: Int, y: Int, size: Int): Unit = {
         for (yy <- y until (y + size)) {
           for (xx <- x until (x + size)) {
             if (dots(yy)(xx)) {
